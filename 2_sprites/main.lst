@@ -1,0 +1,659 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : FreeWare ANSI-C Compiler
+                              3 ; Version 2.2.1 Tue Feb 25 13:35:43 2020
+                              4 
+                              5 ;--------------------------------------------------------
+                              6 	.module lcc101320
+                              7 	
+                              8 ;--------------------------------------------------------
+                              9 ; Public variables in this module
+                             10 ;--------------------------------------------------------
+                             11 	.globl _main
+                             12 	.globl _gets
+                             13 	.globl _puts
+                             14 	.globl _sprintf
+                             15 	.globl _printf
+                             16 	.globl _putchar
+                             17 	.globl _get_tiles
+                             18 	.globl _set_tiles
+                             19 	.globl _get_data
+                             20 	.globl _set_data
+                             21 	.globl _scroll_sprite
+                             22 	.globl _move_sprite
+                             23 	.globl _get_sprite_prop
+                             24 	.globl _set_sprite_prop
+                             25 	.globl _get_sprite_tile
+                             26 	.globl _set_sprite_tile
+                             27 	.globl _get_sprite_data
+                             28 	.globl _set_sprite_data
+                             29 	.globl _scroll_win
+                             30 	.globl _move_win
+                             31 	.globl _get_win_tiles
+                             32 	.globl _set_win_tiles
+                             33 	.globl _set_win_data
+                             34 	.globl _scroll_bkg
+                             35 	.globl _move_bkg
+                             36 	.globl _get_bkg_tiles
+                             37 	.globl _set_bkg_tiles
+                             38 	.globl _set_bkg_data
+                             39 	.globl _hiramcpy
+                             40 	.globl _display_off
+                             41 	.globl _wait_vbl_done
+                             42 	.globl _reset
+                             43 	.globl _set_interrupts
+                             44 	.globl _disable_interrupts
+                             45 	.globl _enable_interrupts
+                             46 	.globl _waitpadup
+                             47 	.globl _waitpad
+                             48 	.globl _joypad
+                             49 	.globl _delay
+                             50 	.globl _receive_byte
+                             51 	.globl _send_byte
+                             52 	.globl _get_mode
+                             53 	.globl _mode
+                             54 	.globl _add_TIM
+                             55 	.globl _add_LCD
+                             56 	.globl _add_VBL
+                             57 	.globl _remove_JOY
+                             58 	.globl _remove_SIO
+                             59 	.globl _remove_TIM
+                             60 	.globl _remove_LCD
+                             61 	.globl _remove_VBL
+                             62 	.globl _cgb_compatibility
+                             63 	.globl _cpu_fast
+                             64 	.globl _cpu_slow
+                             65 	.globl _set_sprite_palette_entry
+                             66 	.globl _set_bkg_palette_entry
+                             67 	.globl _set_sprite_palette
+                             68 	.globl _set_bkg_palette
+                             69 	.globl _sgb_check
+                             70 	.globl _Smiler
+                             71 ;--------------------------------------------------------
+                             72 ; Externals used
+                             73 ;--------------------------------------------------------
+                             74 	.globl _IE_REG
+                             75 	.globl _SVBK_REG
+                             76 	.globl _OCPD_REG
+                             77 	.globl _OCPS_REG
+                             78 	.globl _BCPD_REG
+                             79 	.globl _BCPS_REG
+                             80 	.globl _RP_REG
+                             81 	.globl _HDMA5_REG
+                             82 	.globl _HDMA4_REG
+                             83 	.globl _HDMA3_REG
+                             84 	.globl _HDMA2_REG
+                             85 	.globl _HDMA1_REG
+                             86 	.globl _VBK_REG
+                             87 	.globl _KEY1_REG
+                             88 	.globl _WX_REG
+                             89 	.globl _WY_REG
+                             90 	.globl _OBP1_REG
+                             91 	.globl _OBP0_REG
+                             92 	.globl _BGP_REG
+                             93 	.globl _DMA_REG
+                             94 	.globl _LYC_REG
+                             95 	.globl _LY_REG
+                             96 	.globl _SCX_REG
+                             97 	.globl _SCY_REG
+                             98 	.globl _STAT_REG
+                             99 	.globl _LCDC_REG
+                            100 	.globl _NR52_REG
+                            101 	.globl _NR51_REG
+                            102 	.globl _NR50_REG
+                            103 	.globl _NR44_REG
+                            104 	.globl _NR43_REG
+                            105 	.globl _NR42_REG
+                            106 	.globl _NR41_REG
+                            107 	.globl _NR34_REG
+                            108 	.globl _NR33_REG
+                            109 	.globl _NR32_REG
+                            110 	.globl _NR31_REG
+                            111 	.globl _NR30_REG
+                            112 	.globl _NR24_REG
+                            113 	.globl _NR23_REG
+                            114 	.globl _NR22_REG
+                            115 	.globl _NR21_REG
+                            116 	.globl _NR14_REG
+                            117 	.globl _NR13_REG
+                            118 	.globl _NR12_REG
+                            119 	.globl _NR11_REG
+                            120 	.globl _NR10_REG
+                            121 	.globl _IF_REG
+                            122 	.globl _TAC_REG
+                            123 	.globl _TMA_REG
+                            124 	.globl _TIMA_REG
+                            125 	.globl _DIV_REG
+                            126 	.globl _SC_REG
+                            127 	.globl _SB_REG
+                            128 	.globl _P1_REG
+                            129 	.globl __io_out
+                            130 	.globl __io_in
+                            131 	.globl __io_status
+                            132 	.globl _sys_time
+                            133 	.globl __cpu
+                            134 ;--------------------------------------------------------
+                            135 ; special function registers
+                            136 ;--------------------------------------------------------
+                            137 ;--------------------------------------------------------
+                            138 ; special function bits 
+                            139 ;--------------------------------------------------------
+                            140 ;--------------------------------------------------------
+                            141 ; internal ram data
+                            142 ;--------------------------------------------------------
+                            143 	.area _DATA
+   0000                     144 _Smiler::
+   0000                     145 	.ds 32
+                            146 ;--------------------------------------------------------
+                            147 ; overlayable items in internal ram 
+                            148 ;--------------------------------------------------------
+                            149 	.area _OVERLAY
+                            150 ;--------------------------------------------------------
+                            151 ; indirectly addressable internal ram data
+                            152 ;--------------------------------------------------------
+                            153 	.area _ISEG
+                            154 ;--------------------------------------------------------
+                            155 ; bit data
+                            156 ;--------------------------------------------------------
+                            157 	.area _BSEG
+                            158 ;--------------------------------------------------------
+                            159 ; external ram data
+                            160 ;--------------------------------------------------------
+                            161 	.area _XSEG
+                            162 ;--------------------------------------------------------
+                            163 ; global & static initialisations
+                            164 ;--------------------------------------------------------
+                            165 	.area _GSINIT
+                            166 	.area _GSFINAL
+                            167 	.area _GSINIT
+                            168 ;	main.c 46
+                            169 ; genAssign (pointer)
+   0000 11 00 00            170 	ld	de,#_Smiler + 0
+   0003 3E 7E               171 	ld	a,#0x7E
+   0005 12                  172 	ld	(de),a
+                            173 ; genPlus
+                            174 ; genPlusIncr
+   0006 11 01 00            175 	ld	de,#_Smiler + 1
+                            176 ; genAssign (pointer)
+   0009 3E 7E               177 	ld	a,#0x7E
+   000B 12                  178 	ld	(de),a
+                            179 ; genPlus
+                            180 ; genPlusIncr
+   000C 11 02 00            181 	ld	de,#_Smiler + 2
+                            182 ; genAssign (pointer)
+   000F 3E 81               183 	ld	a,#0x81
+   0011 12                  184 	ld	(de),a
+                            185 ; genPlus
+                            186 ; genPlusIncr
+   0012 11 03 00            187 	ld	de,#_Smiler + 3
+                            188 ; genAssign (pointer)
+   0015 3E FF               189 	ld	a,#0xFF
+   0017 12                  190 	ld	(de),a
+                            191 ; genPlus
+                            192 ; genPlusIncr
+   0018 11 04 00            193 	ld	de,#_Smiler + 4
+                            194 ; genAssign (pointer)
+   001B 3E A5               195 	ld	a,#0xA5
+   001D 12                  196 	ld	(de),a
+                            197 ; genPlus
+                            198 ; genPlusIncr
+   001E 11 05 00            199 	ld	de,#_Smiler + 5
+                            200 ; genAssign (pointer)
+   0021 3E FF               201 	ld	a,#0xFF
+   0023 12                  202 	ld	(de),a
+                            203 ; genPlus
+                            204 ; genPlusIncr
+   0024 11 06 00            205 	ld	de,#_Smiler + 6
+                            206 ; genAssign (pointer)
+   0027 3E 81               207 	ld	a,#0x81
+   0029 12                  208 	ld	(de),a
+                            209 ; genPlus
+                            210 ; genPlusIncr
+   002A 11 07 00            211 	ld	de,#_Smiler + 7
+                            212 ; genAssign (pointer)
+   002D 3E FF               213 	ld	a,#0xFF
+   002F 12                  214 	ld	(de),a
+                            215 ; genPlus
+                            216 ; genPlusIncr
+   0030 11 08 00            217 	ld	de,#_Smiler + 8
+                            218 ; genAssign (pointer)
+   0033 3E 81               219 	ld	a,#0x81
+   0035 12                  220 	ld	(de),a
+                            221 ; genPlus
+                            222 ; genPlusIncr
+   0036 11 09 00            223 	ld	de,#_Smiler + 9
+                            224 ; genAssign (pointer)
+   0039 3E FF               225 	ld	a,#0xFF
+   003B 12                  226 	ld	(de),a
+                            227 ; genPlus
+                            228 ; genPlusIncr
+   003C 11 0A 00            229 	ld	de,#_Smiler + 10
+                            230 ; genAssign (pointer)
+   003F 3E BD               231 	ld	a,#0xBD
+   0041 12                  232 	ld	(de),a
+                            233 ; genPlus
+                            234 ; genPlusIncr
+   0042 11 0B 00            235 	ld	de,#_Smiler + 11
+                            236 ; genAssign (pointer)
+   0045 3E FF               237 	ld	a,#0xFF
+   0047 12                  238 	ld	(de),a
+                            239 ; genPlus
+                            240 ; genPlusIncr
+   0048 11 0C 00            241 	ld	de,#_Smiler + 12
+                            242 ; genAssign (pointer)
+   004B 3E 81               243 	ld	a,#0x81
+   004D 12                  244 	ld	(de),a
+                            245 ; genPlus
+                            246 ; genPlusIncr
+   004E 11 0D 00            247 	ld	de,#_Smiler + 13
+                            248 ; genAssign (pointer)
+   0051 3E FF               249 	ld	a,#0xFF
+   0053 12                  250 	ld	(de),a
+                            251 ; genPlus
+                            252 ; genPlusIncr
+   0054 11 0E 00            253 	ld	de,#_Smiler + 14
+                            254 ; genAssign (pointer)
+   0057 3E 7E               255 	ld	a,#0x7E
+   0059 12                  256 	ld	(de),a
+                            257 ; genPlus
+                            258 ; genPlusIncr
+   005A 11 0F 00            259 	ld	de,#_Smiler + 15
+                            260 ; genAssign (pointer)
+   005D 3E 7E               261 	ld	a,#0x7E
+   005F 12                  262 	ld	(de),a
+                            263 ; genPlus
+                            264 ; genPlusIncr
+   0060 11 10 00            265 	ld	de,#_Smiler + 16
+                            266 ; genAssign (pointer)
+   0063 3E 7E               267 	ld	a,#0x7E
+   0065 12                  268 	ld	(de),a
+                            269 ; genPlus
+                            270 ; genPlusIncr
+   0066 11 11 00            271 	ld	de,#_Smiler + 17
+                            272 ; genAssign (pointer)
+   0069 3E 7E               273 	ld	a,#0x7E
+   006B 12                  274 	ld	(de),a
+                            275 ; genPlus
+                            276 ; genPlusIncr
+   006C 11 12 00            277 	ld	de,#_Smiler + 18
+                            278 ; genAssign (pointer)
+   006F 3E 81               279 	ld	a,#0x81
+   0071 12                  280 	ld	(de),a
+                            281 ; genPlus
+                            282 ; genPlusIncr
+   0072 11 13 00            283 	ld	de,#_Smiler + 19
+                            284 ; genAssign (pointer)
+   0075 3E FF               285 	ld	a,#0xFF
+   0077 12                  286 	ld	(de),a
+                            287 ; genPlus
+                            288 ; genPlusIncr
+   0078 11 14 00            289 	ld	de,#_Smiler + 20
+                            290 ; genAssign (pointer)
+   007B 3E A5               291 	ld	a,#0xA5
+   007D 12                  292 	ld	(de),a
+                            293 ; genPlus
+                            294 ; genPlusIncr
+   007E 11 15 00            295 	ld	de,#_Smiler + 21
+                            296 ; genAssign (pointer)
+   0081 3E FF               297 	ld	a,#0xFF
+   0083 12                  298 	ld	(de),a
+                            299 ; genPlus
+                            300 ; genPlusIncr
+   0084 11 16 00            301 	ld	de,#_Smiler + 22
+                            302 ; genAssign (pointer)
+   0087 3E 81               303 	ld	a,#0x81
+   0089 12                  304 	ld	(de),a
+                            305 ; genPlus
+                            306 ; genPlusIncr
+   008A 11 17 00            307 	ld	de,#_Smiler + 23
+                            308 ; genAssign (pointer)
+   008D 3E FF               309 	ld	a,#0xFF
+   008F 12                  310 	ld	(de),a
+                            311 ; genPlus
+                            312 ; genPlusIncr
+   0090 11 18 00            313 	ld	de,#_Smiler + 24
+                            314 ; genAssign (pointer)
+   0093 3E A5               315 	ld	a,#0xA5
+   0095 12                  316 	ld	(de),a
+                            317 ; genPlus
+                            318 ; genPlusIncr
+   0096 11 19 00            319 	ld	de,#_Smiler + 25
+                            320 ; genAssign (pointer)
+   0099 3E FF               321 	ld	a,#0xFF
+   009B 12                  322 	ld	(de),a
+                            323 ; genPlus
+                            324 ; genPlusIncr
+   009C 11 1A 00            325 	ld	de,#_Smiler + 26
+                            326 ; genAssign (pointer)
+   009F 3E 99               327 	ld	a,#0x99
+   00A1 12                  328 	ld	(de),a
+                            329 ; genPlus
+                            330 ; genPlusIncr
+   00A2 11 1B 00            331 	ld	de,#_Smiler + 27
+                            332 ; genAssign (pointer)
+   00A5 3E FF               333 	ld	a,#0xFF
+   00A7 12                  334 	ld	(de),a
+                            335 ; genPlus
+                            336 ; genPlusIncr
+   00A8 11 1C 00            337 	ld	de,#_Smiler + 28
+                            338 ; genAssign (pointer)
+   00AB 3E 81               339 	ld	a,#0x81
+   00AD 12                  340 	ld	(de),a
+                            341 ; genPlus
+                            342 ; genPlusIncr
+   00AE 11 1D 00            343 	ld	de,#_Smiler + 29
+                            344 ; genAssign (pointer)
+   00B1 3E FF               345 	ld	a,#0xFF
+   00B3 12                  346 	ld	(de),a
+                            347 ; genPlus
+                            348 ; genPlusIncr
+   00B4 11 1E 00            349 	ld	de,#_Smiler + 30
+                            350 ; genAssign (pointer)
+   00B7 3E 7E               351 	ld	a,#0x7E
+   00B9 12                  352 	ld	(de),a
+                            353 ; genPlus
+                            354 ; genPlusIncr
+   00BA 11 1F 00            355 	ld	de,#_Smiler + 31
+                            356 ; genAssign (pointer)
+   00BD 3E 7E               357 	ld	a,#0x7E
+   00BF 12                  358 	ld	(de),a
+                            359 ;--------------------------------------------------------
+                            360 ; code
+                            361 ;--------------------------------------------------------
+                            362 	.area _CODE
+                            363 ;	main.c 9
+                            364 ; genLabel
+                            365 ; genFunction
+                            366 ;	---------------------------------
+                            367 ; Function main
+                            368 ; ---------------------------------
+   0000                     369 ___main_start:
+   0000                     370 _main:
+   0000 C5                  371 	push	bc
+   0001 E8 FF               372 	lda sp,-1(sp)
+                            373 ;	main.c 13
+                            374 ; genAssign
+                            375 ; AOP_STK for _main_currentSpriteIndex_1_1
+   0003 F8 00               376 	lda	hl,0(sp)
+   0005 36 00               377 	ld	(hl),#0x00 ; 3
+                            378 ;	main.c 14
+                            379 ; genAssign
+   0007 06 00               380 	ld	b,#0x00
+   0009 0E 00               381 	ld	c,#0x00
+                            382 ;	main.c 19
+                            383 ; genIpush
+   000B 21 00 00            384 	ld	hl,#_Smiler + 0
+   000E E5                  385 	push	hl
+                            386 ; genIpush
+   000F 3E 02               387 	ld	a,#0x02
+   0011 F5                  388 	push	af
+   0012 33                  389 	inc	sp
+                            390 ; genIpush
+   0013 3E 00               391 	ld	a,#0x00
+   0015 F5                  392 	push	af
+   0016 33                  393 	inc	sp
+                            394 ; genCall
+   0017 CD 00 00            395 	call	_set_sprite_data
+   001A E8 04               396 	lda	sp,4(sp)
+                            397 ;	main.c 21
+                            398 ; genIpush
+   001C 3E 4E               399 	ld	a,#0x4E
+   001E F5                  400 	push	af
+   001F 33                  401 	inc	sp
+                            402 ; genIpush
+   0020 3E 58               403 	ld	a,#0x58
+   0022 F5                  404 	push	af
+   0023 33                  405 	inc	sp
+                            406 ; genIpush
+   0024 3E 00               407 	ld	a,#0x00
+   0026 F5                  408 	push	af
+   0027 33                  409 	inc	sp
+                            410 ; genCall
+   0028 CD 00 00            411 	call	_move_sprite
+   002B E8 03               412 	lda	sp,3(sp)
+                            413 ;	main.c 23
+                            414 ; genOr
+                            415 ; AOP_SFR for _LCDC_REG
+                            416 ; Type res[4] = l[4]&r[1]
+                            417 ; Size res[1] = l[1]&r[1]
+   002D F0 00               418 	ldh	a,(_LCDC_REG+0) ; x
+   002F F6 02               419 	or	a,#0x02
+   0031 E0 00               420 	ldh	(_LCDC_REG+0),a
+                            421 ;	main.c 27
+                            422 ; genLabel
+   0033                     423 00105$:
+                            424 ;	main.c 28
+                            425 ; genPlus
+                            426 ; genPlusIncr
+   0033 04                  427 	inc	b
+   0034 20 01               428 	jr	nz,00111$
+   0036 0C                  429 	inc	c
+   0037                     430 00111$:
+                            431 ;	main.c 29
+                            432 ; genCmpEq
+                            433 ; AOP_STK for _main_currentSpriteIndex_1_1
+   0037 F8 00               434 	lda	hl,0(sp)
+   0039 7E                  435 	ld	a,(hl)
+   003A B7                  436 	or	a,a
+   003B C2 40 00            437 	jp	nz,00112$
+   003E 18 03               438 	jr	00113$
+   0040                     439 00112$:
+   0040 C3 4A 00            440 	jp	00102$
+   0043                     441 00113$:
+                            442 ;	main.c 30
+                            443 ; genAssign
+                            444 ; AOP_STK for _main_currentSpriteIndex_1_1
+   0043 F8 00               445 	lda	hl,0(sp)
+   0045 36 01               446 	ld	(hl),#0x01 ; 3
+                            447 ; genGoto
+   0047 C3 4E 00            448 	jp	00103$
+                            449 ; genLabel
+   004A                     450 00102$:
+                            451 ;	main.c 34
+                            452 ; genAssign
+                            453 ; AOP_STK for _main_currentSpriteIndex_1_1
+   004A F8 00               454 	lda	hl,0(sp)
+   004C 36 00               455 	ld	(hl),#0x00 ; 3
+                            456 ; genLabel
+   004E                     457 00103$:
+                            458 ;	main.c 37
+                            459 ; genIpush
+                            460 ; AOP_STK for _main_currentSpriteIndex_1_1
+   004E F8 00               461 	lda	hl,0(sp)
+   0050 7E                  462 	ld	a,(hl)
+   0051 F5                  463 	push	af
+   0052 33                  464 	inc	sp
+                            465 ; genIpush
+   0053 3E 00               466 	ld	a,#0x00
+   0055 F5                  467 	push	af
+   0056 33                  468 	inc	sp
+                            469 ; genCall
+   0057 CD 00 00            470 	call	_set_sprite_tile
+   005A E8 02               471 	lda	sp,2(sp)
+                            472 ;	main.c 38
+                            473 ; genIpush
+   005C 21 E8 03            474 	ld	hl,#0x03E8
+   005F E5                  475 	push	hl
+                            476 ; genCall
+   0060 CD 00 00            477 	call	_delay
+   0063 E8 02               478 	lda	sp,2(sp)
+                            479 ;	main.c 40
+                            480 ; genIpush
+   0065 3E 00               481 	ld	a,#0x00
+   0067 F5                  482 	push	af
+   0068 33                  483 	inc	sp
+                            484 ; genIpush
+   0069 3E 0A               485 	ld	a,#0x0A
+   006B F5                  486 	push	af
+   006C 33                  487 	inc	sp
+                            488 ; genIpush
+   006D 3E 00               489 	ld	a,#0x00
+   006F F5                  490 	push	af
+   0070 33                  491 	inc	sp
+                            492 ; genCall
+   0071 CD 00 00            493 	call	_scroll_sprite
+   0074 E8 03               494 	lda	sp,3(sp)
+                            495 ;	main.c 42
+                            496 ; genIpush
+   0076 68                  497 	ld	l,b
+   0077 61                  498 	ld	h,c
+   0078 E5                  499 	push	hl
+                            500 ; genIpush
+   0079 21 89 00            501 	ld	hl,#__str_0 + 0
+   007C E5                  502 	push	hl
+                            503 ; genCall
+   007D CD 00 00            504 	call	_printf
+   0080 E8 04               505 	lda	sp,4(sp)
+                            506 ; genGoto
+   0082 C3 33 00            507 	jp	00105$
+                            508 ; genLabel
+   0085                     509 00107$:
+                            510 ; genEndFunction
+   0085 E8 01               511 	lda	sp,1(sp)
+   0087 C1                  512 	pop bc
+   0088 C9                  513 	ret
+   0089                     514 ___main_end:
+                            515 	.area _CODE
+   0089                     516 __str_0:
+   0089 25 64               517 	.ascii "%d"
+   008B 0A                  518 	.db 10
+   008C 00                  519 	.db 0
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 1.
+
+Symbol Table
+
+    _BCPD_REG                          **** GX
+    _BCPS_REG                          **** GX
+    _BGP_REG                           **** GX
+    _DIV_REG                           **** GX
+    _DMA_REG                           **** GX
+    _HDMA1_REG                         **** GX
+    _HDMA2_REG                         **** GX
+    _HDMA3_REG                         **** GX
+    _HDMA4_REG                         **** GX
+    _HDMA5_REG                         **** GX
+    _IE_REG                            **** GX
+    _IF_REG                            **** GX
+    _KEY1_REG                          **** GX
+    _LCDC_REG                          **** GX
+    _LYC_REG                           **** GX
+    _LY_REG                            **** GX
+    _NR10_REG                          **** GX
+    _NR11_REG                          **** GX
+    _NR12_REG                          **** GX
+    _NR13_REG                          **** GX
+    _NR14_REG                          **** GX
+    _NR21_REG                          **** GX
+    _NR22_REG                          **** GX
+    _NR23_REG                          **** GX
+    _NR24_REG                          **** GX
+    _NR30_REG                          **** GX
+    _NR31_REG                          **** GX
+    _NR32_REG                          **** GX
+    _NR33_REG                          **** GX
+    _NR34_REG                          **** GX
+    _NR41_REG                          **** GX
+    _NR42_REG                          **** GX
+    _NR43_REG                          **** GX
+    _NR44_REG                          **** GX
+    _NR50_REG                          **** GX
+    _NR51_REG                          **** GX
+    _NR52_REG                          **** GX
+    _OBP0_REG                          **** GX
+    _OBP1_REG                          **** GX
+    _OCPD_REG                          **** GX
+    _OCPS_REG                          **** GX
+    _P1_REG                            **** GX
+    _RP_REG                            **** GX
+    _SB_REG                            **** GX
+    _SCX_REG                           **** GX
+    _SCY_REG                           **** GX
+    _SC_REG                            **** GX
+    _STAT_REG                          **** GX
+    _SVBK_REG                          **** GX
+  1 _Smiler                            0000 GR
+    _TAC_REG                           **** GX
+    _TIMA_REG                          **** GX
+    _TMA_REG                           **** GX
+    _VBK_REG                           **** GX
+    _WX_REG                            **** GX
+    _WY_REG                            **** GX
+  0 ___main_end                        0089 R
+  0 ___main_start                      0000 R
+    __cpu                              **** GX
+    __io_in                            **** GX
+    __io_out                           **** GX
+    __io_status                        **** GX
+  0 __str_0                            0089 R
+    _add_LCD                           **** GX
+    _add_TIM                           **** GX
+    _add_VBL                           **** GX
+    _cgb_compatibility                 **** GX
+    _cpu_fast                          **** GX
+    _cpu_slow                          **** GX
+    _delay                             **** GX
+    _disable_interrupts                **** GX
+    _display_off                       **** GX
+    _enable_interrupts                 **** GX
+    _get_bkg_tiles                     **** GX
+    _get_data                          **** GX
+    _get_mode                          **** GX
+    _get_sprite_data                   **** GX
+    _get_sprite_prop                   **** GX
+    _get_sprite_tile                   **** GX
+    _get_tiles                         **** GX
+    _get_win_tiles                     **** GX
+    _gets                              **** GX
+    _hiramcpy                          **** GX
+    _joypad                            **** GX
+  0 _main                              0000 GR
+    _mode                              **** GX
+    _move_bkg                          **** GX
+    _move_sprite                       **** GX
+    _move_win                          **** GX
+    _printf                            **** GX
+    _putchar                           **** GX
+    _puts                              **** GX
+    _receive_byte                      **** GX
+    _remove_JOY                        **** GX
+    _remove_LCD                        **** GX
+    _remove_SIO                        **** GX
+    _remove_TIM                        **** GX
+    _remove_VBL                        **** GX
+    _reset                             **** GX
+    _scroll_bkg                        **** GX
+    _scroll_sprite                     **** GX
+    _scroll_win                        **** GX
+    _send_byte                         **** GX
+    _set_bkg_data                      **** GX
+    _set_bkg_palette                   **** GX
+    _set_bkg_palette_entry             **** GX
+    _set_bkg_tiles                     **** GX
+    _set_data                          **** GX
+    _set_interrupts                    **** GX
+    _set_sprite_data                   **** GX
+    _set_sprite_palette                **** GX
+    _set_sprite_palette_entry          **** GX
+    _set_sprite_prop                   **** GX
+    _set_sprite_tile                   **** GX
+    _set_tiles                         **** GX
+    _set_win_data                      **** GX
+    _set_win_tiles                     **** GX
+    _sgb_check                         **** GX
+    _sprintf                           **** GX
+    _sys_time                          **** GX
+    _wait_vbl_done                     **** GX
+    _waitpad                           **** GX
+    _waitpadup                         **** GX
+
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 2.
+
+Area Table
+
+   0 _CODE                              size   8D   flags 0
+   1 _DATA                              size   20   flags 0
+   2 _OVERLAY                           size    0   flags 0
+   3 _ISEG                              size    0   flags 0
+   4 _BSEG                              size    0   flags 0
+   5 _XSEG                              size    0   flags 0
+   6 _GSINIT                            size   C0   flags 0
+   7 _GSFINAL                           size    0   flags 0

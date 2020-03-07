@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "stdio.h": "c",
+        "gb.h": "c",
+        "smilesprites.h": "c",
+        "sample.h": "c",
+        "charactersprite.h": "c",
+        "font.h": "c"
+    }
+}
