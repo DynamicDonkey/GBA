@@ -41,9 +41,9 @@ void playSound(UINT8 sound) {
     
     //Explode sound
     if(sound == SFX_explode) {
-            NR41_REG = 0x0C;
-            NR42_REG = 0xC0;
-            NR43_REG = 0x67;
-            NR44_REG = 0xC0; 
+        NR41_REG = 0x0C;
+        NR42_REG = 0xC0;
+        NR43_REG = 0x67;
+        NR44_REG = 0xC0; 
     }
 }
