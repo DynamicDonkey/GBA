@@ -1,24 +1,28 @@
 #include <gb/gb.h>
 #include <stdio.h>
 
-#include "GameCharacter.c"
-
-#include "GeneralUtil.c"
+#include "includes/GameCharacter.c"
+#include "includes/GeneralUtil.c"
+#include "includes/SoundUtil.c"
 
 #include "sprites/GameSprites.c"
 
-struct GameCharacter ship;
-struct GameCharacter bug;
-// struct GameCharacter laser;
+GameCharacter ship;
+GameCharacter bug;
 
 UBYTE SpriteSize = 8;
 
+UBYTE checkCollision(GameCharacter* one, GameCharacter* two) {
+    return (one->x >= two->x && one->x <= two->x + two->width) && (one->y >= two->y && one->y <= two->y + two->height) || (two->x >= one->x && two->x <= one->x + one->width) && (two->y >= one->y && two->y <= one->y + one->height);
 
-void moveGameCharacter(struct GameCharacter* character, UINT8 x, UINT8 y) {
+}
+
+void moveGameCharacter(GameCharacter* character, UINT8 x, UINT8 y) {
     move_sprite(character->spriteids[0], x, y);
     move_sprite(character->spriteids[1], x+SpriteSize, y);
     move_sprite(character->spriteids[2], x, y+SpriteSize);
     move_sprite(character->spriteids[3], x+SpriteSize, y+SpriteSize);
+    
 }
 
 void initPlayer() {
@@ -67,28 +71,6 @@ void initBug() {
     
 }
 
-// void initLaser() { 
-
-//     laser.x = ship.x;
-//     laser.y = ship.y;
-//     laser.width = 8;
-//     laser.height = 8;
-
-//     set_sprite_tile(0,0);
-//     bug.spriteids[0] = 0;
-
-//     set_sprite_tile(1,1);
-//     bug.spriteids[1] = 1;
-
-//     set_sprite_tile(2,2);
-//     bug.spriteids[2] = 2;
-
-//     set_sprite_tile(3,3);
-//     bug.spriteids[3] = 3;
-//     moveGameCharacter(&laser, laser.x, laser.y);
-
-// }
-
 void initDisplay() {
     set_sprite_data(0,8,GameSprites);
     SHOW_SPRITES;
@@ -96,7 +78,7 @@ void initDisplay() {
 }
 
 void gameloop() {
-    while(1) {
+    while(!checkCollision(&ship, &bug)) {
         UBYTE input = joypad();
         if(input & J_LEFT) {
             ship.x -= 2;
@@ -107,8 +89,7 @@ void gameloop() {
             moveGameCharacter(&ship, ship.x, ship.y);
         }
         if(input & J_A) {
-            printf("shoot laser\n");
-            //moveGameCharacter(&laser, laser.x, laser.y);
+            playSound(SFX_jump);
         }
 
         bug.y += 1;
@@ -116,13 +97,20 @@ void gameloop() {
             bug.y = 0;
             bug.x = ship.x;
         }
-        moveGameCharacter(&bug, bug.x, bug.y);
 
+        //Collision detection
+        
+        moveGameCharacter(&bug, bug.x, bug.y);
         performantDelay(1);
     }
+    HIDE_SPRITES;
+    playSound(SFX_explode);
+    printf(" \n \n \n \n \n \n \n \n \n === GAME OVER ===");
+    
 }
 
 void main() {
+    initSound();
     initPlayer();
     initBug();
     initDisplay();
