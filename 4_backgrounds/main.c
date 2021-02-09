@@ -3,10 +3,10 @@
 #include <gb/gb.h>
 
 //Sprite includes
-#include "sprites/background.c"
+#include "sprites/background.h"
 
 //Map includes.
-#include "maps/testmap1.c"
+#include "maps/testmap1.h"
 
 //Function which handles setting the background data, such as the tiles and currently loaded map.
 //Also shows the background which was just loaded, then just in case, turns the display on. 
